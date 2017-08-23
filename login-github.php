@@ -1,9 +1,7 @@
 <?php
 
 // start the user session for maintaining individual user states during the multi-stage authentication flow:
-if (!isset($_SESSION)) {
-    session_start();
-}
+session_start();
 
 # DEFINE THE OAUTH PROVIDER AND SETTINGS TO USE #
 $_SESSION['WPOA']['PROVIDER'] = 'Github';
