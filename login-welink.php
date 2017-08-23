@@ -14,7 +14,7 @@ define('SCOPE', 'openid');
 
 define('URL_AUTH', "http://login.digitalworkplace.cn/auth/realms/welink/protocol/openid-connect/auth?");
 define('URL_TOKEN', "http://login.digitalworkplace.cn/auth/realms/welink/protocol/openid-connect/token");
-define('URL_USER', "http://login.digitalworkplace.cn/auth/realms/welink/protocol/openid-connect/userinfo?");
+// define('URL_USER', "http://login.digitalworkplace.cn/auth/realms/welink/protocol/openid-connect/userinfo?");
 # END OF DEFINE THE OAUTH PROVIDER AND SETTINGS TO USE #
 
 // remember the user's last url so we can redirect them back to there after the login ends:
@@ -102,7 +102,7 @@ function get_oauth_token($wpoa) {
 			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_POST, 1);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $url_params);
 
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, (get_option('wpoa_http_util_verify_ssl') == 1 ? 1 : 0));
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, (get_option('wpoa_http_util_verify_ssl') == 1 ? 2 : 0));
@@ -125,67 +125,39 @@ function get_oauth_token($wpoa) {
 			}
 			break;
 	}
-	exit($result);
-	// parse the result:
-	parse_str($result, $result_obj); // PROVIDER SPECIFIC: Github encodes the access token result as a querystring by default
-	$access_token = $result_obj['access_token']; // PROVIDER SPECIFIC: this is how Github returns the access token KEEP THIS PROTECTED!
-	//$expires_in = $result_obj['expires_in']; // PROVIDER SPECIFIC: Github does not return an access token expiration!
-	//$expires_at = time() + $expires_in; // PROVIDER SPECIFIC: Github does not return an access token expiration!
-	// handle the result:
+
+	$resultObj = json_decode($result);
+	if(!array_key_exists('error', $resultObj)){
+		$access_token = $resultObj->access_token;
+	}
+
 	if (!$access_token) {
 		// malformed access token result detected:
 		$wpoa->wpoa_end_login("Sorry, we couldn't log you in. Malformed access token result detected. Please notify the admin or try again later.");
 	}
 	else {
 		$_SESSION['WPOA']['ACCESS_TOKEN'] = $access_token;
-		//$_SESSION['WPOA']['EXPIRES_IN'] = $expires_in; // PROVIDER SPECIFIC: Github does not return an access token expiration!
-		//$_SESSION['WPOA']['EXPIRES_AT'] = $expires_at; // PROVIDER SPECIFIC: Github does not return an access token expiration!
 		return true;
 	}
 }
 
 function get_oauth_identity($wpoa) {
-	// here we exchange the access token for the user info...
-	// set the access token param:
-	$params = array(
-		'access_token' => $_SESSION['WPOA']['ACCESS_TOKEN'], // PROVIDER SPECIFIC: the access token is passed to Github using this key name
-	);
-	$url_params = http_build_query($params);
-	// perform the http request:
-	switch (strtolower(HTTP_UTIL)) {
-		case 'curl':
-			$url = URL_USER . $url_params; // TODO: we probably want to send this using a curl_setopt...
-			$curl = curl_init();
-			curl_setopt($curl, CURLOPT_URL, $url);
-			curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // PROVIDER SPECIFIC: Github requires the useragent for all api requests
-			// PROVIDER NORMALIZATION: Reddit requires that we send the access token via a bearer header...
-			//curl_setopt($curl, CURLOPT_HTTPHEADER, array('x-li-format: json')); // PROVIDER SPECIFIC: I think this is only for LinkedIn...
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			$result = curl_exec($curl);
-			$result_obj = json_decode($result, true);
-			break;
-		case 'stream-context':
-			$url = rtrim(URL_USER, "?");
-			$opts = array('http' =>
-				array(
-					'method' => 'GET',
-					'user_agent' => $_SERVER['HTTP_USER_AGENT'], // PROVIDER NOTE: Github requires the useragent for all api requests
-					'header'  => "Authorization: token " . $_SESSION['WPOA']['ACCESS_TOKEN'],
-				)
-			);
-			$context = $context  = stream_context_create($opts);
-			$result = @file_get_contents($url, false, $context);
-			if ($result === false) {
-				$wpoa->wpoa_end_login("Sorry, we couldn't log you in. Could not retrieve user identity via stream context. Please notify the admin or try again later.");
-			}
-			$result_obj = json_decode($result, true);
-			break;
-	}
+	$accessToken = $_SESSION['WPOA']['ACCESS_TOKEN'];
+
 	// parse and return the user's oauth identity:
 	$oauth_identity = array();
 	$oauth_identity['provider'] = $_SESSION['WPOA']['PROVIDER'];
-	$oauth_identity['id'] = $result_obj['id']; // PROVIDER SPECIFIC: this is how Github returns the user's unique id
-	//$oauth_identity['email'] = $result_obj['email']; //PROVIDER SPECIFIC: this is how Github returns the email address
+
+	$accessTokenParts = explode('.', $accessToken);
+	if($accessTokenParts[1]){
+		$userInfoJson = base64_decode($accessTokenParts[1]);
+		if($userInfoJson){
+			$user = json_decode($userInfoJson);
+		}
+		$oauth_identity['id'] = $user->preferred_username;
+		$oauth_identity['email'] = $user->email;
+	}
+	
 	if (!$oauth_identity['id']) {
 		$wpoa->wpoa_end_login("Sorry, we couldn't log you in. User identity was not found. Please notify the admin or try again later.");
 	}
