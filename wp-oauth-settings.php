@@ -62,103 +62,7 @@
 	<!-- START Settings Body -->
 	<div id="wpoa-settings-body">
 	<!-- START Settings Column 2 -->
-	<div id="wpoa-settings-col2" class="wpoa-settings-column">
-		<div id="wpoa-settings-section-about" class="wpoa-settings-section">
-			<h3>About</h3>
-			<div class='form-padding'>
-				<div id="wpoa-logo" style="width:64px; height:64px; float:right; background-size:100% 100%;"></div>
-				<p><span style="font-size:1.1em;"><strong>WP-OAuth <?php echo WPOA::PLUGIN_VERSION; ?></strong></span><br/>by <a href="http://glassocean.net" target="_blank"><strong>Perry Butler</strong></a></p>
-				<p>Rate it 5 stars: <a id="wpoa-rate-5stars" href="https://wordpress.org/support/view/plugin-reviews/wp-oauth?rate=5" target="_blank"><img src="http://ps.w.org/wp-oauth/assets/5stars.png" style="vertical-align:text-top;"></img></a></p>
-				<nav><ul><li><a href="https://wordpress.org/plugins/wp-oauth/" target="_blank">WP-OAuth at WordPress.org</a></li><li><a href="https://github.com/perrybutler/WP-OAuth" target="_blank">WP-OAuth at GitHub.com</a></li><li><a href="http://glassocean.net/wp-oauth-enhances-your-wordpress-login-and-registration/" target="_blank">WP-OAuth at GlassOcean.net</a></li></ul></nav>
-			</div>
-		</div>
-		<div id="wpoa-settings-section-news" class="wpoa-settings-section">
-			<h3>News</h3>
-			<div class='form-padding'>
-				<?php 
-				$rss = fetch_feed("http://glassocean.net/tag/wp-oauth/feed/");
-				if (!is_wp_error($rss)) {
-					$maxitems = $rss->get_item_quantity(5); 
-					$rss_items = $rss->get_items(0, $maxitems);
-				}
-				?>
-				<?php if ($maxitems == 0) : ?>
-					<p><?php _e("Sorry, news was inaccessible or does not exist.", 'my-text-domain' ); ?></p>
-				<?php else : ?>
-				<ul>
-					<?php foreach ($rss_items as $item) : ?>
-						<li>
-							<a href="<?php echo esc_url($item->get_permalink()); ?>"
-								title="<?php printf( __('Posted %s', 'my-text-domain'), $item->get_date('j F Y | g:i a') ); ?>"
-								target="_blank">
-								<?php echo esc_html($item->get_title()); ?>
-							</a>
-						</li>
-					<?php endforeach; ?>
-				</ul>
-				<?php endif; ?>
-			</div>
-		</div>
-		<div id="wpoa-settings-section-config-check" class="wpoa-settings-section">
-		<h3>Config Check</h3>
-			<div class='form-padding'>
-				<p>These ratings are an estimate of <em>this plugin's current configuration</em> when compared to an optimum configuration.</p>
-				<div id='wpoa-measurements'>
-					<div class="has-tip">
-						<div class="wpoa-measurement-label">Security: <?php echo $cc_security; ?>% <a href="#" class="tip-button">[?]</a></div>
-						<div class="wpoa-measurement"><div class="wpoa-measurement-rating" style="width:<?php echo $cc_security; ?>%;"></div></div>
-						<p class="tip-message">
-							+2 if site is secured with an SSL certificate<br/>
-							+1 if Verify Peer/Host SSL Certificates = True<br/>
-							+1 if Hide the WordPress login form = True<br/>
-							+1 if Automatically logout inactive users = True<br/>
-							+1 if HTTP Utility = cURL<br/>
-						</p>
-					</div>
-					<div class="has-tip">
-						<div class="wpoa-measurement-label">Privacy: <?php echo $cc_privacy; ?>% <a href="#" class="tip-button">[?]</a></div>
-						<div class="wpoa-measurement"><div class="wpoa-measurement-rating" style="width:<?php echo $cc_privacy; ?>%;"></div></div>
-						<p class="tip-message">
-							+1 if Automatically logout inactive users = True<br/>
-						</p>
-					</div>
-					<div class="has-tip">
-						<div class="wpoa-measurement-label">User Experience: <?php echo $cc_ux; ?>% <a href="#" class="tip-button">[?]</a></div>
-						<div class="wpoa-measurement"><div class="wpoa-measurement-rating" style="width:<?php echo $cc_ux; ?>%;"></div></div>
-						<p class="tip-message">
-							+1 if Logo links to site = True<br/>
-							+1 if Show login messages = True<br/>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="wpoa-settings-section-donate" class="wpoa-settings-section">
-			<h3>Donate</h3>
-			<div class='form-padding'>
-				<div id="wpoa-heart"></div>
-				<p>Do you enjoy using this plugin? Do you want to help improve it? Consider donating via <strong>PayPal</strong>!</p><p>WP-OAuth remains free of restrictions, advertisements, branding, etc. <em>Your donations help make this possible.</em></p>
-				<form action="https://www.paypal.com/cgi-bin/webscr" target="_blank" method="post">
-					$ <input type="text" style="width: 50px" name="amount" value="5">
-					<span>USD</span>
-					<input type="hidden" value="_xclick" name="cmd">
-					<input type="hidden" value="hectavex@gmail.com" name="business">
-					<input type="hidden" value="WP-OAuth" name="item_name">
-					<input type="hidden" value="0" name="no_shipping">
-					<input type="hidden" value="1" name="no_note">
-					<input type="hidden" value="Return to your dashboard" name="cbt">
-					<input type="hidden" value="USD" name="currency_code">
-					<input type="submit" id="wpoa-paypal-button" class="button" value="Donate">
-				</form>
-			</div>
-		</div>
-		<div id="wpoa-settings-section-support" class="wpoa-settings-section">
-			<h3 id="bookmark-login-page-form-customization">Support</h3>
-			<div class='form-padding'>
-				<p>Your general questions can be asked in the plugin <a href="https://wordpress.org/support/plugin/wp-oauth" target="_blank">support forum</a>.</p>
-			</div>
-		</div>
-	</div>
+	
 	<!-- END Settings Column 2 -->
 	<!-- START Settings Column 1 -->
 	<div id="wpoa-settings-col1" class="wpoa-settings-column">
@@ -486,183 +390,43 @@
 			</div> <!-- .form-padding -->
 			</div> <!-- .wpoa-settings-section -->
 			<!-- END User Registration section -->
-			
-			<!-- START Login with Google section -->
-			<div id="wpoa-settings-section-login-with-google" class="wpoa-settings-section">
-			<h3>Login with Google</h3>
+
+			<!-- START Login with Welink section -->
+			<div id="wpoa-settings-section-login-with-welink" class="wpoa-settings-section">
+			<h3>Login with WeLink</h3>
 			<div class='form-padding'>
 			<table class='form-table'>
 				<tr valign='top'>
 				<th scope='row'>Enabled:</th>
 				<td>
-					<input type='checkbox' name='wpoa_google_api_enabled' value='1' <?php checked(get_option('wpoa_google_api_enabled') == 1); ?> />
+					<input type='checkbox' name='wpoa_welink_api_enabled' value='1' <?php checked(get_option('wpoa_welink_api_enabled') == 1); ?> />
 				</td>
 				</tr>
 				
 				<tr valign='top'>
 				<th scope='row'>Client ID:</th>
 				<td>
-					<input type='text' name='wpoa_google_api_id' value='<?php echo get_option('wpoa_google_api_id'); ?>' />
-				</td>
-				</tr>
-
-				<tr valign='top'>
-				<th scope='row'>Client Secret:</th>
-				<td>
-					<input type='text' name='wpoa_google_api_secret' value='<?php echo get_option('wpoa_google_api_secret'); ?>' />
-				</td>
-				</tr>
-			</table> <!-- .form-table -->
-			<p>
-				<strong>Instructions:</strong>
-				<ol>
-					<li>Visit the Google website for developers <a href='https://console.developers.google.com/project' target="_blank">console.developers.google.com</a>.</li>
-					<li>At Google, create a new Project and enable the Google+ API. This will enable your site to access the Google+ API.</li>
-					<li>At Google, provide your site's homepage URL (<?php echo $blog_url; ?>) for the new Project's Redirect URI. Don't forget the trailing slash!</li>
-					<li>At Google, you must also configure the Consent Screen with your Email Address and Product Name. This is what Google will display to users when they are asked to grant access to your site/app.</li>
-					<li>Paste your Client ID/Secret provided by Google into the fields above, then click the Save all settings button.</li>
-				</ol>
-			</p>
-			<?php submit_button('Save all settings'); ?>
-			</div> <!-- .form-padding -->
-			</div> <!-- .wpoa-settings-section -->
-			<!-- END Login with Google section -->
-
-			<!-- START Login with WP OAuth Server section -->
-			<div id="wpoa-settings-section-login-with-wp-oauth-server" class="wpoa-settings-section">
-			<h3>Login with WP OAuth Server</h3>
-			<div class='form-padding'>
-			<table class='form-table'>
-				<tr valign='top'>
-				<th scope='row'>Enabled:</th>
-				<td>
-					<input type='checkbox' name='wpoa_oauth_server_api_enabled' value='1' <?php checked(get_option('wpoa_oauth_server_api_enabled') == 1); ?> />
-				</td>
-				</tr>
-				
-				<tr valign='top'>
-				<th scope='row'>Client ID:</th>
-				<td>
-					<input type='text' name='wpoa_oauth_server_api_id' value='<?php echo get_option('wpoa_oauth_server_api_id'); ?>' />
-				</td>
-				</tr>
-
-				<tr valign='top'>
-				<th scope='row'>Client Secret:</th>
-				<td>
-					<input type='text' name='wpoa_oauth_server_api_secret' value='<?php echo get_option('wpoa_oauth_server_api_secret'); ?>' />
-				</td>
-				</tr>
-
-				<tr valign='top'>
-				<th scope='row'>OAuth Server Endpoint:</th>
-				<td>
-					<input type='text' name='wpoa_oauth_server_api_endpoint' value='<?php echo get_option('wpoa_oauth_server_api_endpoint'); ?>' />
-				</td>
-				</tr>
-
-				<tr valign='top'>
-				<th scope='row'>Login Button Text:</th>
-				<td>
-					<input type='text' name='wpoa_oauth_server_api_button_text' value='<?php echo get_option('wpoa_oauth_server_api_button_text'); ?>' />
-				</td>
-				</tr>
-			</table> <!-- .form-table -->
-			<p>
-				<strong>Instructions:</strong>
-				<ol>
-					<li>Log into the WordPress website that is running WP OAuth Server.</li>
-					<li>Go to OAuth Server and click on the "Clients" tab.</li>
-					<li>Click on "Add New Client" and follow the instructions.</li>
-					<li>Use <strong><?php echo $blog_url; ?></strong> as the Redirect URI. Click "Add Client".</li>
-					<li>Provide a login provider name as the button text option above. Login with "My OAuth Server". This text will show on the login button.</li>
-					<li>Paste your Client ID/Secret provided by WP OAuth Server into the fields above, then click the Save all settings button.</li>
-				</ol>
-			</p>
-			<?php submit_button('Save all settings'); ?>
-			</div> <!-- .form-padding -->
-			</div> <!-- .wpoa-settings-section -->
-			<!-- END Login with Google section -->
-			
-			<!-- START Login with Facebook section -->
-			<div id="wpoa-settings-section-login-with-facebook" class="wpoa-settings-section">
-			<h3>Login with Facebook</h3>
-			<div class='form-padding'>
-			<table class='form-table'>
-				<tr valign='top'>
-				<th scope='row'>Enabled:</th>
-				<td>
-					<input type='checkbox' name='wpoa_facebook_api_enabled' value='1' <?php checked(get_option('wpoa_facebook_api_enabled') == 1); ?> />
-				</td>
-				</tr>
-				
-				<tr valign='top'>
-				<th scope='row'>App ID:</th>
-				<td>
-					<input type='text' name='wpoa_facebook_api_id' value='<?php echo get_option('wpoa_facebook_api_id'); ?>' />
+					<input type='text' name='wpoa_welink_api_id' value='<?php echo get_option('wpoa_welink_api_id'); ?>' />
 				</td>
 				</tr>
 				 
 				<tr valign='top'>
-				<th scope='row'>App Secret:</th>
+				<th scope='row'>Client Secret:</th>
 				<td>
-					<input type='text' name='wpoa_facebook_api_secret' value='<?php echo get_option('wpoa_facebook_api_secret'); ?>' />
+					<input type='text' name='wpoa_welink_api_secret' value='<?php echo get_option('wpoa_welink_api_secret'); ?>' />
 				</td>
 				</tr>
 			</table> <!-- .form-table -->
 			<p>
 				<strong>Instructions:</strong>
 				<ol>
-					<li>Register as a Facebook Developer at <a href='https://developers.facebook.com/' target="_blank">developers.facebook.com</a>.</li>
-					<li>At Facebook, create a new App. This will enable your site to access the Facebook API.</li>
-					<li>At Facebook, provide your site's homepage URL (<?php echo $blog_url; ?>) for the new App's Redirect URI. Don't forget the trailing slash!</li>
-					<li>Paste your App ID/Secret provided by Facebook into the fields above, then click the Save all settings button.</li>
+					<li>//TODO</li>
 				</ol>
 			</p>
 			<?php submit_button('Save all settings'); ?>
 			</div> <!-- .form-padding -->
 			</div> <!-- .wpoa-settings-section -->
-			<!-- END Login with Facebook section -->
-			
-			<!-- START Login with LinkedIn section -->
-			<div id="wpoa-settings-section-login-with-linkedin" class="wpoa-settings-section">
-			<h3>Login with LinkedIn</h3>
-			<div class='form-padding'>
-			<table class='form-table'>
-				<tr valign='top'>
-				<th scope='row'>Enabled:</th>
-				<td>
-					<input type='checkbox' name='wpoa_linkedin_api_enabled' value='1' <?php checked(get_option('wpoa_linkedin_api_enabled') == 1); ?> />
-				</td>
-				</tr>
-				
-				<tr valign='top'>
-				<th scope='row'>API Key:</th>
-				<td>
-					<input type='text' name='wpoa_linkedin_api_id' value='<?php echo get_option('wpoa_linkedin_api_id'); ?>' />
-				</td>
-				</tr>
-				 
-				<tr valign='top'>
-				<th scope='row'>Secret Key:</th>
-				<td>
-					<input type='text' name='wpoa_linkedin_api_secret' value='<?php echo get_option('wpoa_linkedin_api_secret'); ?>' />
-				</td>
-				</tr>
-			</table> <!-- .form-table -->
-			<p>
-				<strong>Instructions:</strong>
-				<ol>
-					<li>Register as a LinkedIn Developer at <a href='https://developers.linkedin.com/' target="_blank">developers.linkedin.com</a>.</li>
-					<li>At LinkedIn, create a new App. This will enable your site to access the LinkedIn API.</li>
-					<li>At LinkedIn, provide your site's homepage URL (<?php echo $blog_url; ?>) for the new App's Redirect URI. Don't forget the trailing slash!</li>
-					<li>Paste your API Key/Secret provided by LinkedIn into the fields above, then click the Save all settings button.</li>
-				</ol>
-			</p>
-			<?php submit_button('Save all settings'); ?>
-			</div> <!-- .form-padding -->
-			</div> <!-- .wpoa-settings-section -->
-			<!-- END Login with LinkedIn section -->
+			<!-- END Login with Welink section -->
 			
 			<!-- START Login with Github section -->
 			<div id="wpoa-settings-section-login-with-github" class="wpoa-settings-section">
@@ -703,270 +467,7 @@
 			</div> <!-- .form-padding -->
 			</div> <!-- .wpoa-settings-section -->
 			<!-- END Login with Github section -->
-
-			<!-- START Login with itembase section -->
-			<div id="wpoa-settings-section-login-with-itembase" class="wpoa-settings-section">
-				<h3>Login with itembase</h3>
-				<div class='form-padding'>
-					<table class='form-table'>
-						<tr valign='top'>
-							<th scope='row'>Enabled:</th>
-							<td>
-								<input type='checkbox' name='wpoa_itembase_api_enabled' value='1' <?php checked(get_option('wpoa_itembase_api_enabled') == 1); ?> />
-							</td>
-						</tr>
-
-						<tr valign='top'>
-							<th scope='row'>Client ID:</th>
-							<td>
-								<input type='text' name='wpoa_itembase_api_id' value='<?php echo get_option('wpoa_itembase_api_id'); ?>' />
-							</td>
-						</tr>
-
-						<tr valign='top'>
-							<th scope='row'>Client Secret:</th>
-							<td>
-								<input type='text' name='wpoa_itembase_api_secret' value='<?php echo get_option('wpoa_itembase_api_secret'); ?>' />
-							</td>
-						</tr>
-					</table> <!-- .form-table -->
-					<p>
-						<strong>Instructions:</strong>
-					<ol>
-						<li>Register as an itembase Developer by following the <a href='http://itembase.github.io/#steps-to-get-started' target="_blank">instructions in the documentation</a>.</li>
-						<li>Provide your site's homepage URL (<?php echo $blog_url; ?>) as redirect URI. Don't forget the trailing slash!</li>
-						<li>Paste your API Key/Secret provided by itembase into the fields above, then click the Save all settings button.</li>
-					</ol>
-					</p>
-					<?php submit_button('Save all settings'); ?>
-				</div> <!-- .form-padding -->
-			</div> <!-- .wpoa-settings-section -->
-			<!-- END Login with itembase section -->
-			
-			<!-- START Login with Reddit section -->
-			<div id="wpoa-settings-section-login-with-reddit" class="wpoa-settings-section">
-			<h3>Login with Reddit</h3>
-			<div class='form-padding'>
-			<table class='form-table'>
-				<tr valign='top'>
-				<th scope='row'>Enabled:</th>
-				<td>
-					<input type='checkbox' name='wpoa_reddit_api_enabled' value='1' <?php checked(get_option('wpoa_reddit_api_enabled') == 1); ?> />
-				</td>
-				</tr>
-				
-				<tr valign='top'>
-				<th scope='row'>Client ID:</th>
-				<td>
-					<input type='text' name='wpoa_reddit_api_id' value='<?php echo get_option('wpoa_reddit_api_id'); ?>' />
-				</td>
-				</tr>
-				 
-				<tr valign='top'>
-				<th scope='row'>Client Secret:</th>
-				<td>
-					<input type='text' name='wpoa_reddit_api_secret' value='<?php echo get_option('wpoa_reddit_api_secret'); ?>' />
-				</td>
-				</tr>
-			</table> <!-- .form-table -->
-			<p>
-				<strong>Instructions:</strong>
-				<ol>
-					<li>Register as a Reddit Developer at <a href='https://ssl.reddit.com/prefs/apps' target="_blank">ssl.reddit.com/prefs/apps</a>.</li>
-					<li>At Reddit, create a new App. This will enable your site to access the Reddit API.</li>
-					<li>At Reddit, provide your site's homepage URL (<?php echo $blog_url; ?>) for the new App's Redirect URI. Don't forget the trailing slash!</li>
-					<li>Paste your Client ID/Secret provided by Reddit into the fields above, then click the Save all settings button.</li>
-				</ol>
-			</p>
-			<?php submit_button('Save all settings'); ?>
-			</div> <!-- .form-padding -->
-			</div> <!-- .wpoa-settings-section -->
-			<!-- END Login with Reddit section -->
-			
-			<!-- START Login with Windows Live section -->
-			<div id="wpoa-settings-section-login-with-windowslive" class="wpoa-settings-section">
-			<h3>Login with Windows Live</h3>
-			<div class='form-padding'>
-			<table class='form-table'>
-				<tr valign='top'>
-				<th scope='row'>Enabled:</th>
-				<td>
-					<input type='checkbox' name='wpoa_windowslive_api_enabled' value='1' <?php checked(get_option('wpoa_windowslive_api_enabled') == 1); ?> />
-				</td>
-				</tr>
-				
-				<tr valign='top'>
-				<th scope='row'>Client ID:</th>
-				<td>
-					<input type='text' name='wpoa_windowslive_api_id' value='<?php echo get_option('wpoa_windowslive_api_id'); ?>' />
-				</td>
-				</tr>
-				 
-				<tr valign='top'>
-				<th scope='row'>Client Secret:</th>
-				<td>
-					<input type='text' name='wpoa_windowslive_api_secret' value='<?php echo get_option('wpoa_windowslive_api_secret'); ?>' />
-				</td>
-				</tr>
-			</table> <!-- .form-table -->
-			<p>
-				<strong>Instructions:</strong>
-				<ol>
-					<li>Register as a Windows Live Developer at <a href='https://manage.dev.live.com' target="_blank">manage.dev.live.com</a>.</li>
-					<li>At Windows Live, create a new App. This will enable your site to access the Windows Live API.</li>
-					<li>At Windows Live, provide your site's homepage URL (<?php echo $blog_url; ?>) for the new App's Redirect URI. Don't forget the trailing slash!</li>
-					<li>Paste your Client ID/Secret provided by Windows Live into the fields above, then click the Save all settings button.</li>
-				</ol>
-			</p>
-			<?php submit_button('Save all settings'); ?>
-			</div> <!-- .form-padding -->
-			</div> <!-- .wpoa-settings-section -->
-			<!-- END Login with Windows Live section -->
-
-			<!-- START Login with PayPal section -->
-			<div id="wpoa-settings-section-login-with-paypal" class="wpoa-settings-section">
-			<h3>Login with PayPal</h3>
-			<div class='form-padding'>
-			<table class='form-table'>
-				<tr valign='top'>
-				<th scope='row'>Enabled:</th>
-				<td>
-					<input type='checkbox' name='wpoa_paypal_api_enabled' value='1' <?php checked(get_option('wpoa_paypal_api_enabled') == 1); ?> />
-				</td>
-				</tr>
-				
-				<tr valign='top'>
-				<th scope='row'>Sandbox mode:</th>
-				<td>
-					<input type='checkbox' name='wpoa_paypal_api_sandbox_mode' value='1' <?php checked(get_option('wpoa_paypal_api_sandbox_mode') == 1); ?> />
-					<p class="tip-message">PayPal offers a sandbox mode for developers who wish to setup and test PayPal Login with their site before going live.</p>
-				</td>
-				</tr>
-				
-				<tr valign='top'>
-				<th scope='row'>Client ID:</th>
-				<td>
-					<input type='text' name='wpoa_paypal_api_id' value='<?php echo get_option('wpoa_paypal_api_id'); ?>' />
-				</td>
-				</tr>
-				 
-				<tr valign='top'>
-				<th scope='row'>Client Secret:</th>
-				<td>
-					<input type='text' name='wpoa_paypal_api_secret' value='<?php echo get_option('wpoa_paypal_api_secret'); ?>' />
-				</td>
-				</tr>
-			</table> <!-- .form-table -->
-			<p>
-				<strong>Instructions:</strong>
-				<ol>
-					<li>Register as a PayPal Developer at <a href='https://developer.paypal.com' target="_blank">developer.paypal.com</a>.</li>
-					<li>At PayPal, create a new App. This will enable your site to access the PayPal API. Your PayPal App will begin in <em>sandbox mode</em> for testing.</li>
-					<li>At PayPal, provide your site's homepage URL (<?php echo $blog_url; ?>) for the <em>App redirect URLs</em>. Don't forget the trailing slash!</li>
-					<li>At PayPal, in the APP CAPABILITIES section, enable <em>Log In with PayPal</em>.</li>
-					<li>Paste your Client ID/Secret provided by PayPal into the fields above, then click the Save all settings button.</li>
-					<li>After testing PayPal login in <em>sandbox mode</em> with your site, you'll eventually want to switch the App over to <em>live mode</em> at PayPal, and turn off the Sandbox mode above.</li>
-				</ol>
-			</p>
-			<?php submit_button('Save all settings'); ?>
-			</div> <!-- .form-padding -->
-			</div> <!-- .wpoa-settings-section -->
-			<!-- END Login with PayPal section -->
-
-			<!-- START Login with Instagram section -->
-			<div id="wpoa-settings-section-login-with-instagram" class="wpoa-settings-section">
-			<h3>Login with Instagram</h3>
-			<div class='form-padding'>
-			<table class='form-table'>
-				<tr valign='top'>
-				<th scope='row'>Enabled:</th>
-				<td>
-					<input type='checkbox' name='wpoa_instagram_api_enabled' value='1' <?php checked(get_option('wpoa_instagram_api_enabled') == 1); ?> />
-				</td>
-				</tr>
-				
-				<tr valign='top'>
-				<th scope='row'>Client ID:</th>
-				<td>
-					<input type='text' name='wpoa_instagram_api_id' value='<?php echo get_option('wpoa_instagram_api_id'); ?>' />
-				</td>
-				</tr>
-				 
-				<tr valign='top'>
-				<th scope='row'>Client Secret:</th>
-				<td>
-					<input type='text' name='wpoa_instagram_api_secret' value='<?php echo get_option('wpoa_instagram_api_secret'); ?>' />
-				</td>
-				</tr>
-			</table> <!-- .form-table -->
-			<p>
-				<strong>Instructions:</strong>
-				<ol>
-					<li>NOTE: Instagram's developer signup requires a valid cell phone number.</li>
-					<li>At Instagram, register as an <a href='http://instagram.com/developer/authentication/' target="_blank">Instagram Developer</a>.</li>
-					<li>At Instagram, after signing up/in, click <a href='http://instagram.com/developer/clients/manage/'>Manage Clients</a>.</li>
-					<li>At Instagram, click <a href="http://instagram.com/developer/clients/register/">Register a New Client</a>. This will enable your site to access the Instagram API.</li>
-					<li>At Instagram, provide your site's homepage URL (<?php echo $blog_url; ?>) for the <em>OAuth redirect_uri</em>. Don't forget the trailing slash!</li>
-					<li>At Instagram, copy the <em>Client ID/Client Secret</em> provided by Instagram and paste them into the fields above, then click the Save all settings button.</li>
-				</ol>
-				<strong>References:</strong>
-				<ul>
-					<li><a href='http://instagram.com/developer/authentication/'>Instagram Developer Reference - Authentication</a></li>
-				</ul>
-			</p>
-			<?php submit_button('Save all settings'); ?>
-			</div> <!-- .form-padding -->
-			</div> <!-- .wpoa-settings-section -->
-			<!-- END Login with Instagram section -->
-
-			<!-- START Login with Battle.net section -->
-			<div id="wpoa-settings-section-login-with-battlenet" class="wpoa-settings-section">
-			<h3>Login with Battle.net</h3>
-			<div class='form-padding'>
-			<table class='form-table'>
-				<tr valign='top'>
-				<th scope='row'>Enabled:</th>
-				<td>
-					<input type='checkbox' name='wpoa_battlenet_api_enabled' value='1' <?php checked(get_option('wpoa_battlenet_api_enabled') == 1); ?> />
-				</td>
-				</tr>
-				
-				<tr valign='top'>
-				<th scope='row'>Key:</th>
-				<td>
-					<input type='text' name='wpoa_battlenet_api_id' value='<?php echo get_option('wpoa_battlenet_api_id'); ?>' />
-				</td>
-				</tr>
-				 
-				<tr valign='top'>
-				<th scope='row'>Secret:</th>
-				<td>
-					<input type='text' name='wpoa_battlenet_api_secret' value='<?php echo get_option('wpoa_battlenet_api_secret'); ?>' />
-				</td>
-				</tr>
-			</table> <!-- .form-table -->
-			
-			<p>
-				<strong>Instructions:</strong>
-				<ol>
-					<li>NOTE: Battle.net API <em>requires</em> your site to be secured with an SSL certificate; the site URL should start with <u>https://</u>.</li>
-					<li>Visit the <a href='http://dev.battle.net/' target="_blank">Battle.net API</a> home page and <a href='https://dev.battle.net/member/register' target="_blank">Create a Mashery Account</a>.
-					<li>After creating your account and signing in, visit the <a href='https://dev.battle.net/apps/myapps'>My Applications</a> page.</li>
-					<li><a href="https://dev.battle.net/apps/register">Create a New Application</a> and fill out the details.</li>
-					<li>Provide your site URL (<?php echo site_url('', 'https'); ?>/) for the <em>Register Callback URL</em>. Don't forget the trailing slash!</li>
-					<li>After registering the application, locate the <em>Key/Secret</em> provided by Battle.net and paste them into the fields above, then click the Save all settings button.</li>
-				</ol>
-				<strong>References:</strong>
-				<ul>
-					<li><a href='https://dev.battle.net/docs/read/oauth' target='_blank'>Battle.net OAuth Reference</a></li>
-					<li><a href='https://dev.battle.net/apps/tos' target='_blank'>Battle.net API Terms of Service</a></li>
-				</ul>
-			</p>
-			<?php submit_button('Save all settings'); ?>
-			</div> <!-- .form-padding -->
-			</div> <!-- .wpoa-settings-section -->
-			<!-- END Login with Battle.net section -->
-			
+						
 			<!-- START Back Channel Configuration section -->
 			<div id="wpoa-settings-section-back-channel=configuration" class="wpoa-settings-section">
 			<h3>Back Channel Configuration</h3>
